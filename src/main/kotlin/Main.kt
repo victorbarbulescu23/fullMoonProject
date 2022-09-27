@@ -12,35 +12,43 @@ fun main() {
                                 LocalDate.of(year,9,10), LocalDate.of(year,10,9),
                                 LocalDate.of(year,11,8), LocalDate.of (year,12,7))
 
-    print("Please enter your current month as a number: ")
-    val month = readLine()!!
-    print("Please enter your current day as a number: ")
-    val day = readLine()!!
+    do {
+        var Break: Boolean = true
 
-    if (month.toInt() < 1 || month.toInt() > 12){
-        println("You have to enter a number between 1 and 12 for the month!")
-    } else if (day.toInt() < 1 || day.toInt() > 31){
-        println("You have to enter a number between 1 and 31 for the day!")
-    } else {
-        val holdDay: LocalDate = LocalDate.of(year, month.toInt(), day.toInt())
+        print("Please enter your current month as a number: ")
+        val month = readLine()!!
+        print("Please enter your current day as a number: ")
+        val day = readLine()!!
 
-        for (i in 0..datesOfMoons.size - 1){
-            if (holdDay.month == datesOfMoons[i].month){
-                if (holdDay.dayOfMonth < datesOfMoons[i].dayOfMonth){
-                    println("The next full moon will be on ${datesOfMoons[i].format(formatter)}")
-                } else if (holdDay.dayOfMonth == datesOfMoons[i].dayOfMonth){
-                    println("the next full moon will be tonight!")
-                } else if (holdDay.dayOfMonth >  datesOfMoons[i].dayOfMonth){
-                    if (datesOfMoons[i].monthValue == 12){
-                        println("the next full moon will be next year. This app cannot predict next years moons. Sorry LMAO!")
-                    } else {
-                        val temp: LocalDate = LocalDate.of(year,datesOfMoons[i].monthValue + 1,datesOfMoons[i + 1].dayOfMonth)
-                        println("The next full moon will be on ${temp.format(formatter)}")
+        if (month.toInt() < 1 || month.toInt() > 12){
+            println("You have to enter a number between 1 and 12 for the month! \n")
+        } else if (day.toInt() < 1 || day.toInt() > 31){
+            println("You have to enter a number between 1 and 31 for the day! \n")
+        } else {
+            val holdDay: LocalDate = LocalDate.of(year, month.toInt(), day.toInt())
+
+            for (i in 0..datesOfMoons.size - 1){
+                if (holdDay.month == datesOfMoons[i].month){
+                    if (holdDay.dayOfMonth < datesOfMoons[i].dayOfMonth){
+                        println("The next full moon will be on ${datesOfMoons[i].format(formatter)}")
+                        Break = false
+                    } else if (holdDay.dayOfMonth == datesOfMoons[i].dayOfMonth){
+                        println("the next full moon will be tonight!")
+                        Break = false
+                    } else if (holdDay.dayOfMonth >  datesOfMoons[i].dayOfMonth){
+                        if (datesOfMoons[i].monthValue == 12){
+                            println("the next full moon will be next year. This app cannot predict next years moons. Sorry LMAO!")
+                            Break = false
+                        } else {
+                            val temp: LocalDate = LocalDate.of(year,datesOfMoons[i].monthValue + 1,datesOfMoons[i + 1].dayOfMonth)
+                            println("The next full moon will be on ${temp.format(formatter)}")
+                            Break = false
+                        }
                     }
                 }
             }
         }
-    }
+    } while (Break)
 
 
 }
